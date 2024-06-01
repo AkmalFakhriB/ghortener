@@ -12,11 +12,11 @@ import (
 
 func RedirectToOriginalUrl(w http.ResponseWriter, r *http.Request) {
 	url := r.PathValue("url")
-	fmt.Printf("shorter url is: %s", url)
 
 	urlData, err := DB.GetOriginalUrlByShorter(url)
 	if err != nil {
 		fmt.Printf("Error when trying to get original url data: %s", err)
+		w.WriteHeader(http.StatusNotFound)
 		return
 	}
 
